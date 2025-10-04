@@ -2,6 +2,8 @@ import praw
 from dotenv import load_dotenv
 import os
 
+load_dotenv()
+
 REDDIT_CLIENT_ID = os.getenv("REDDIT_CLIENT_ID")
 REDDIT_CLIENT_SECRET = os.getenv("REDDIT_CLIENT_SECRET")
 REDDIT_USER_AGENT = os.getenv("REDDIT_USER_AGENT")
@@ -14,9 +16,9 @@ reddit = praw.Reddit(
     user_agent=REDDIT_USER_AGENT
 )
 
-subreddit = reddit.subreddit("Rome") # Replace "python" with your desired subreddit
-search_results = subreddit.search("restaurant recommendations", sort="Top", limit=10)
+subreddit = reddit.subreddit("India")
+search_results = subreddit.search("restaurants", sort="Top", limit=1000)
 
 with open("output.txt", "w", encoding="utf-8", errors="ignore") as file:
     for search_result in search_results:
-        file.write(search_result.selftext + "\n")
+        file.write(search_result.selftext + "\n") 
