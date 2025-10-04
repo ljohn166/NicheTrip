@@ -19,14 +19,17 @@ class DataCollector:
             user_agent=REDDIT_USER_AGENT
         )
 
-        subreddits = ["solotravel", "travel"]
+        # subreddits = ["solotravel", "travel"]
 
-        with open("output.txt", "w", encoding="utf-8", errors="ignore") as file:
-            for subreddit in subreddits:
-                for submission in reddit.subreddit(subreddit).top
+        # with open("output.txt", "w", encoding="utf-8", errors="ignore") as file:
+        #     for subreddit in subreddits:
+        #         for submission in reddit.subreddit(subreddit).top(limit=1000):
+        #             file.write(submission.name + "\n")
+        #             for comment in submission.comments:
+        #                 file.write(comment.body)
 
-        subreddit = reddit.subreddit("India")
-        search_results = subreddit.search("restaurants", sort="Top", limit=1000)
+        subreddit = reddit.subreddit("solotravel")
+        search_results = subreddit.search("restaurant", sort="Top", limit=1000)
 
         with open("output.txt", "w", encoding="utf-8", errors="ignore") as file:
             for search_result in search_results:

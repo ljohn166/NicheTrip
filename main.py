@@ -4,7 +4,11 @@ app = FastAPI()
 
 @app.get("/")
 def root():
-    return{"index.html"}
+    return{"layout.html"}
 
-@app.post("/results")
-def get_item(item_id: String)
+"""@app.post("/itinerary")
+def get_item(item_id: String):
+    if get:
+
+    else:
+        return render_template("index.html")"""
