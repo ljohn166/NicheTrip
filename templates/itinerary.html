@@ -1,17 +1,22 @@
-`{% extends "layout.html" %}
+{% extends "layout.html" %}
+{% block title %}{{ city }} Travel Ideas | NicheTrip{% endblock %}
 
-{% block title %}
-    Homepage
+{% block content %}
+<main class="results-container">
+  <h1>Hidden Gems in {{ city }}</h1>
+  <section class="tiles">
+    {% for place in places %}
+    <div class="tile">
+      <div class="tile-header">
+        <h2>{{ place.name }}</h2>
+        <p class="tile-type">{{ place.type }}</p>
+      </div>
+      <p class="tile-desc">{{ place.description }}</p>
+      <p class="tile-location">
+        <!--{{ place.location.city }}, {{ place.location.country }}-->
+      </p>
+    </div>
+    {% endfor %}
+  </section>
+</main>
 {% endblock %}
-
-{% block main %}
-    <h1>{{ title }}</h1>
-    <form action="/" method="post">
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="City" placeholder="city" type="text">
-        </div>
-        <button class="btn btn-primary" type="submit">Submit</button>
-    </form>
-    <p>this is so niche</p>
-{% endblock %}
-

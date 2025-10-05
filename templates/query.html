@@ -1,11 +1,11 @@
-`{% extends "layout.html" %}
+{% extends "layout.html" %}
 
 {% block title %}Get Started | NicheTrip{% endblock %}
 
 {% block content %}
 <main class="query-container">
   <h1>Get Started</h1>
-  <form action="/itinerary" method="get" class="query-form">
+  <form action="/itinerary" method="post" class="query-form">
     <div class="query-input-wrapper">
       <input
         type="text"

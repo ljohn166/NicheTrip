@@ -19,7 +19,7 @@ def processData(location):
     "The user frequents Reddit and prefers recommendations sourced from Reddit users; however, "
     "only consider posts directly relevant to the city and its unique features. Do not directly quote "
     "redditors; instead, describe the locations and experiences in your own words, highlighting what makes "
-    "them special and worth visiting."
+    "them special and worth visiting. If there's not enough data feel free to add your own. YOU MUST RETURN 10 RECOMMENDATIONS"
     )
 
 
@@ -38,5 +38,3 @@ def processData(location):
 
     client.close()
     return response.text 
-
-print(processData("Chicago"))

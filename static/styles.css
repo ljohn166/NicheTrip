@@ -151,15 +151,22 @@ body {
   max-width: 500px;
 }
 
-.query-input {
-  width: 100%;
-  padding: 0.9rem 1.5rem;
+.query-input-wrapper {
+  display: flex;
+  align-items: center;
   border: 2px solid #000;
   border-radius: 999px;
-  font-size: 1rem;
-  outline: none;
-  transition: all 0.2s ease;
+  overflow: hidden;
   background-color: #f9f9f9;
+}
+
+.query-input {
+  flex: 1;
+  padding: 0.9rem 1.2rem;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background: transparent;
 }
 
 .query-input::placeholder {
@@ -167,27 +174,87 @@ body {
   letter-spacing: 0.5px;
 }
 
-.query-input:focus {
-  background-color: #fff;
-  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
-}
-
 .query-btn {
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 0.5rem 1rem;
-  border: 2px solid #000;
-  border-radius: 999px;
   background-color: #000;
   color: #fff;
-  font-weight: 600;
+  border: none;
+  padding: 0.6rem 1.2rem;
   font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 999px;
+  margin-right: 4px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.2s ease;
 }
 
 .query-btn:hover {
   background-color: #333;
+}
+/* ===============================
+   Results Page Tiles
+=================================*/
+
+.results-container {
+  padding: 3rem 2rem 5rem;
+  text-align: center;
+  animation: fadeIn 0.8s ease;
+}
+
+.results-container h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  justify-items: center;
+}
+
+.tile {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  padding: 1.5rem;
+  max-width: 350px;
+  text-align: left;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.6s ease forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.tile-header h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.place-type {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.75rem;
+}
+
+.place-description {
+  font-size: 0.95rem;
+  color: #333;
+  margin-bottom: 0.75rem;
+}
+
+.place-location {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+/* Fade-in animation for container */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

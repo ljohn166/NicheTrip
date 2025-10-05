@@ -11,6 +11,14 @@ REDDIT_CLIENT_ID = os.getenv("REDDIT_CLIENT_ID")
 REDDIT_CLIENT_SECRET = os.getenv("REDDIT_CLIENT_SECRET")
 REDDIT_USER_AGENT = os.getenv("REDDIT_USER_AGENT")
 
+
+reddit = praw.Reddit(
+    client_id= REDDIT_CLIENT_ID, 
+    client_secret=REDDIT_CLIENT_SECRET, 
+    user_agent=REDDIT_USER_AGENT 
+)
+
+
 def getRedditData(city):
     #Checks if r/city is a real subreddit
     try:
@@ -18,21 +26,20 @@ def getRedditData(city):
         # Attempt to fetch its id to confirm existence
         _ = subreddit.id
         subreddits = ["solotravel", "travel", city]
-        
-        KEYWORDS = ["restaurants", "food", "hidden gem", "secret", "club", "pub", "night life", "activity", "niche"]
-
-        # Quote multi-word keywords for Lucene
-        keywords_lucene = [f'"{k}"' if " " in k else k for k in KEYWORDS]
-        # Combine with OR for keywords
-        keywords_query = " OR ".join(keywords_lucene)
-        # Full query: CITY AND (keywords)
-        query = f'"{city}" AND ({keywords_query})'
 
     except (NotFound, Redirect, Forbidden):
-        #Omits city from the keywords and subreddit lists
-        KEYWORDS = ["restaurants", "food", "hidden gem", "secret", "club", "pub", "night life", "activity", "niche"]
-        query = "(" + " OR ".join(KEYWORDS) + ")"
+        #Omits city from subreddit list
         subreddits = ["solotravel", "travel"]
+
+    KEYWORDS = ["restaurants", "food", "hidden gem", "secret", "club", "pub", "night life", "activity", "niche"]
+
+    # Quote multi-word keywords for Lucene
+    keywords_lucene = [f'"{k}"' if " " in k else k for k in KEYWORDS]
+    # Combine with OR for keywords
+    keywords_query = " OR ".join(keywords_lucene)
+    # Full query: CITY AND (keywords)
+    query = f'"{city}" AND ({keywords_query})'
+
 
     #Writes data to output.txt - Searches through "limit" posts per subreddit and compiles their comments if they ahve >= 100 upvotes.
     with open("output.txt", "w", encoding="utf-8", errors="ignore") as file:

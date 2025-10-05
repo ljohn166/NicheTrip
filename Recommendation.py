@@ -7,7 +7,7 @@ class Location(BaseModel):
 
 class Recommendation(BaseModel):
     name: str
-    description: str
     location: Location
     type: str
+    description: str
 
