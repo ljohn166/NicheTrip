@@ -2,50 +2,39 @@ import praw
 from prawcore.exceptions import NotFound, Redirect, Forbidden
 from dotenv import load_dotenv
 import os
-from fastapi.concurrency import run_in_threadpool
+import time
 
+
+load_dotenv()
+
+REDDIT_CLIENT_ID = os.getenv("REDDIT_CLIENT_ID")
+REDDIT_CLIENT_SECRET = os.getenv("REDDIT_CLIENT_SECRET")
+REDDIT_USER_AGENT = os.getenv("REDDIT_USER_AGENT")
 
 def getRedditData(city):
-    load_dotenv()
-    
-    REDDIT_CLIENT_ID = os.getenv("REDDIT_CLIENT_ID")
-    REDDIT_CLIENT_SECRET = os.getenv("REDDIT_CLIENT_SECRET")
-    REDDIT_USER_AGENT = os.getenv("REDDIT_USER_AGENT")
-
-    # Initialize PRAW with your Reddit instance
-    # (client_id, client_secret, user_agent, etc.)
-    reddit = praw.Reddit(
-        client_id= REDDIT_CLIENT_ID,
-        client_secret=REDDIT_CLIENT_SECRET,
-        user_agent=REDDIT_USER_AGENT
-    )
-
-    CITY = city
-
-
+    #Checks if r/city is a real subreddit
     try:
-        subreddit = reddit.subreddit(CITY)
+        subreddit = reddit.subreddit(city)
         # Attempt to fetch its id to confirm existence
         _ = subreddit.id
-        subreddits = ["solotravel", "travel", CITY]
+        subreddits = ["solotravel", "travel", city]
         
         KEYWORDS = ["restaurants", "food", "hidden gem", "secret", "club", "pub", "night life", "activity", "niche"]
 
         # Quote multi-word keywords for Lucene
         keywords_lucene = [f'"{k}"' if " " in k else k for k in KEYWORDS]
-
         # Combine with OR for keywords
         keywords_query = " OR ".join(keywords_lucene)
-
         # Full query: CITY AND (keywords)
-        query = f'"{CITY}" AND ({keywords_query})'
-        print(f"Subreddit r/{CITY} exists!")
+        query = f'"{city}" AND ({keywords_query})'
+
     except (NotFound, Redirect, Forbidden):
+        #Omits city from the keywords and subreddit lists
         KEYWORDS = ["restaurants", "food", "hidden gem", "secret", "club", "pub", "night life", "activity", "niche"]
         query = "(" + " OR ".join(KEYWORDS) + ")"
         subreddits = ["solotravel", "travel"]
-        print(f"Subreddit r/{CITY} does NOT exist.")
 
+    #Writes data to output.txt - Searches through "limit" posts per subreddit and compiles their comments if they ahve >= 100 upvotes.
     with open("output.txt", "w", encoding="utf-8", errors="ignore") as file:
         for subreddit in subreddits:
             searchResults = reddit.subreddit(subreddit).search(query, sort="best", syntax="lucene", limit=10)
@@ -58,3 +47,14 @@ def getRedditData(city):
 
 
 
+#TESTING CODE
+
+# start = time.time()
+# getRedditData("Rome")   # your original function
+# end = time.time()
+# print("Old method time:", end - start)
+
+# start = time.time()
+# getRedditDataNew("Rome")   # optimized function
+# end = time.time()
+# print("New method time:", end - start)
