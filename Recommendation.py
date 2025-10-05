@@ -9,4 +9,5 @@ class Recommendation(BaseModel):
     name: str
     description: str
     location: Location
+    type: str
 
