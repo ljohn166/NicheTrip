@@ -18,4 +18,13 @@
     </div>
   </form>
 </main>
+
+{% if error %}
+<script>
+  window.onload = function() {
+    alert("{{ error }}");
+  };
+</script>
+{% endif %}
+
 {% endblock %}
