@@ -2,21 +2,39 @@
 {% block title %}{{ city }} Travel Ideas | NicheTrip{% endblock %}
 
 {% block content %}
-<main class="results-container">
-  <h1>Hidden Gems in {{ city }}</h1>
-  <section class="tiles">
-    {% for place in places %}
-    <div class="tile">
-      <div class="tile-header">
+<main class="results-shell" data-city="{{ city }}">
+  <aside class="results-panel">
+    <header>
+      <h1>Hidden Gems in {{ city }}</h1>
+      <p>Tap a card to explore details on the interactive map.</p>
+    </header>
+    <div class="recommendations-list" id="recommendationList">
+      {% for place in places %}
+      <button
+        class="recommendation-card"
+        data-name="{{ place.name }}"
+        data-description="{{ place.description }}"
+        data-latitude="{{ place.coordinates[0] if place.coordinates is defined else '' }}"
+        data-longitude="{{ place.coordinates[1] if place.coordinates is defined else '' }}"
+      >
         <h2>{{ place.name }}</h2>
-        <p class="tile-type">{{ place.type }}</p>
-      </div>
-      <p class="tile-desc">{{ place.description }}</p>
-      <p class="tile-location">
-        <!--{{ place.location.city }}, {{ place.location.country }}-->
-      </p>
+        <p>{{ place.description }}</p>
+        {% if place.type is defined %}
+        <p class="place-type">{{ place.type }}</p>
+        {% endif %}
+        {% if place.location is defined %}
+        <p class="place-location">{{ place.location.city }}, {{ place.location.country }}</p>
+        {% endif %}
+        {% if place.coordinates is defined %}
+        <p class="place-coordinates" data-for="coordinates">{{ place.coordinates[0] }}, {{ place.coordinates[1] }}</p>
+        {% endif %}
+      </button>
+      {% endfor %}
     </div>
-    {% endfor %}
+  </aside>
+
+  <section class="map-panel">
+    <div id="map"></div>
   </section>
 </main>
 {% endblock %}

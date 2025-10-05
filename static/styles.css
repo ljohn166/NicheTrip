@@ -1,6 +1,6 @@
 * {
-  margin: 5;
-  padding: 10;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
   font-family: "Inter", sans-serif;
 }
@@ -190,22 +190,116 @@ body {
 .query-btn:hover {
   background-color: #333;
 }
+
 /* ===============================
-   Results Page Tiles
+   Results Page Layout
 =================================*/
 
-.results-container {
-  padding: 3rem 2rem 5rem;
-  text-align: center;
-  animation: fadeIn 0.8s ease;
+.results-shell {
+  display: flex;
+  min-height: calc(100vh - 96px);
+  background: linear-gradient(135deg, #ecfdf5, #f8fafc);
+  color: #0f172a;
 }
 
-.results-container h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 2rem;
+.results-panel {
+  flex: 1 1 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(6px);
+  border-right: 1px solid rgba(16, 185, 129, 0.2);
 }
 
+@media (min-width: 768px) {
+  .results-panel {
+    flex-basis: 33.333%;
+    max-width: 33.333%;
+  }
+}
+
+.results-panel header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.18);
+  padding: 1.5rem;
+}
+
+.results-panel header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.results-panel header p {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+.recommendations-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.25rem 1.5rem 1.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.recommendation-card {
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 0.9rem;
+  background: #ffffff;
+  padding: 1.2rem;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+  box-shadow: 0 12px 24px rgba(15, 118, 110, 0.06);
+}
+
+.recommendation-card:hover,
+.recommendation-card:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 32px rgba(16, 185, 129, 0.12);
+  outline: none;
+}
+
+.recommendation-card h2 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #065f46;
+}
+
+.recommendation-card p {
+  margin: 0.55rem 0 0;
+  font-size: 0.92rem;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.map-panel {
+  display: none;
+  position: relative;
+  flex: 1;
+  min-height: 400px;
+}
+
+@media (min-width: 768px) {
+  .map-panel {
+    display: block;
+  }
+}
+
+#map {
+  position: absolute;
+  inset: 0;
+}
+
+/* Legacy Tiles (fallback) */
 .tiles {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -216,7 +310,7 @@ body {
 .tile {
   background: #fff;
   border-radius: 16px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
   padding: 1.5rem;
   max-width: 350px;
   text-align: left;
@@ -226,8 +320,14 @@ body {
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .tile-header h2 {
@@ -255,6 +355,22 @@ body {
 
 /* Fade-in animation for container */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 767px) {
+  .results-panel {
+    border-right: none;
+  }
+
+  .recommendations-list {
+    padding-bottom: 4rem;
+  }
 }

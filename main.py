@@ -6,7 +6,8 @@ import json
 from database import init_db, get_from_db, save_to_db
 from validate import is_valid_city
 from fastapi.responses import JSONResponse
-import os
+from geopy.geocoders import Nominatim
+
 
 app = FastAPI()
 
@@ -57,6 +58,8 @@ def get_recommendations(request: Request, city: str = Form(...)):
     getRedditData(city)
     response = processData(city)
     response = json.loads(response)
+    response = add_coordinates(city, response)
+
     save_to_db(city, response)
     print(response)
     return templates.TemplateResponse("itinerary.html", {
@@ -65,3 +68,24 @@ def get_recommendations(request: Request, city: str = Form(...)):
         "places": response
     })
     
+
+
+
+
+geolocator = Nominatim(user_agent="niche_trip")
+
+def add_coordinates(city: str, places: list[dict]):
+    """
+    Ensures each place in the response has coordinates.
+    If missing, tries to geocode using Nominatim.
+    """
+    for place in places:
+        if not place.get("coordinates"):
+            query = f"{place.get('name', '')}, {city}"
+            try:
+                location = geolocator.geocode(query)
+                if location:
+                    place["coordinates"] = [location.latitude, location.longitude]
+            except Exception as e:
+                print(f"Geocoding failed for {query}: {e}")
+    return places

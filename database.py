@@ -45,8 +45,3 @@ def delete_city(city: str):
     cursor.execute("DELETE FROM city_recommendations WHERE city = ?", (city,))
     conn.commit()
     conn.close()
-
-
-city_to_delete = input("Enter the city to delete: ")
-delete_city(city_to_delete)
-print(f"Deleted cached data for {city_to_delete}")

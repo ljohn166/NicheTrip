@@ -1,5 +1,4 @@
 import requests
-
 def is_valid_city(city) -> bool:
     try:
         url = "https://nominatim.openstreetmap.org/search"
@@ -24,3 +23,4 @@ def is_valid_city(city) -> bool:
     except Exception as e:
         print(f"Nominatim error, try again: {e}")
         return None
+
