@@ -36,7 +36,7 @@ async def get_started(request: Request):
     #     "places": places
     # })
 
-@app.post("/itinerary")
+@app.post("/itinerary", response_class=HTMLResponse)
 def get_recommendations(request: Request, city: str = Form(...)):
     if not is_valid_city(city):
         return templates.TemplateResponse("query.html", {
