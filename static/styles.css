@@ -16,7 +16,6 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 3rem;
-  background: transparent;
 }
 
 .logo {
@@ -62,7 +61,7 @@ body {
   background: #333;
 }
 
-/* Hero section */
+/* Hero */
 .hero {
   display: flex;
   align-items: center;
@@ -99,7 +98,6 @@ body {
 .hero-image img {
   width: 100%;
   max-width: 240px;
-  height: auto;
   border-radius: 12px;
   object-fit: cover;
 }

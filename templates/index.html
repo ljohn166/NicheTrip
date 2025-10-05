@@ -1,17 +1,44 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    Homepage
-{% endblock %}
+{% block title %}Home | NicheTrip{% endblock %}
 
 {% block main %}
-    <h1>{{ title }}</h1>
-    <form action="/" method="post">
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="City" placeholder="city" type="text">
-        </div>
-        <button class="btn btn-primary" type="submit">Submit</button>
-    </form>
-    <p>this is so niche</p>
-{% endblock %}
+  <main class="hero">
+    <div class="hero-text">
+      <h1>A better way to travel</h1>
+      <p>
+        You’ve seen all the main sights in the first two days. Now what?
+        Our AI-powered trip planner gives you recommendations beyond the
+        typical places, so you can enjoy everything your travel destination
+        has to offer.
+      </p>
+      <button class="btn btn-dark">Try now</button>
+    </div>
+    <div class="hero-image">
+      <img src="{{ url_for('static', filename='static/travel.jpg') }}" alt="Nature view" />
+    </div>
+  </main>
 
+  <section class="info-section">
+    <div class="info-card">
+      <h3>Give us your travel preferences</h3>
+      <p>
+        What city do you want to see? What kinds of places do you want to expore? What is your prefered ways of traveling?
+      </p>
+    </div>
+
+    <div class="info-card">
+      <h3>Let ai give you ideas</h3>
+      <p>
+        Sit back and let ai plan out all the places you see. 
+      </p>
+    </div>
+
+    <div class="info-card">
+      <h3>Finalize your itinerary</h3>
+      <p>
+        Get tailored places to see to make a truly memorable travel experience.
+      </p>
+    </div>
+  </section>
+{% endblock %}
