@@ -2,8 +2,7 @@ from fastapi import FastAPI, Request, Form, BackgroundTasks
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-from DataCollector import getRedditData
-from GeminiProcessor import processData
+
 
 app = FastAPI()
 
@@ -21,6 +20,8 @@ def get_recommendations(city: str, background_tasks: BackgroundTasks):
     return {"message": f"Processing recommendations for {city} in background."}
 
 def run_full_workflow(city: str):
+    from DataCollector import getRedditData
+    from GeminiProcessor import processData
     getRedditData(city)
     response = processData(city)
     print(response)

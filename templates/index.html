@@ -2,20 +2,20 @@
 
 {% block title %}Home | NicheTrip{% endblock %}
 
-{% block main %}
+{% block content %}
   <main class="hero">
     <div class="hero-text">
       <h1>A better way to travel</h1>
       <p>
-        You’ve seen all the main sights in the first two days. Now what?
+        You've seen all the popular sights in the first two days. Now what?
         Our AI-powered trip planner gives you recommendations beyond the
-        typical places, so you can enjoy everything your travel destination
+        tourist hotspots, so you can enjoy everything your travel destination
         has to offer.
       </p>
       <button class="btn btn-dark">Try now</button>
     </div>
     <div class="hero-image">
-      <img src="{{ url_for('static', filename='static/travel.jpg') }}" alt="Nature view" />
+      <img src="{{ url_for('static', path='travel.jpg') }}?v=12345" alt="travel" />
     </div>
   </main>
 
@@ -23,7 +23,7 @@
     <div class="info-card">
       <h3>Give us your travel preferences</h3>
       <p>
-        What city do you want to see? What kinds of places do you want to expore? What is your prefered ways of traveling?
+        What city do you want to see? What kinds of places do you want to expore? What are your prefered ways of traveling?
       </p>
     </div>
 

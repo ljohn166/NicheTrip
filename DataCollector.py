@@ -1,12 +1,13 @@
 import praw
-from dotenv import load_dotenv
 from prawcore.exceptions import NotFound, Redirect, Forbidden
+from dotenv import load_dotenv
 import os
+from fastapi.concurrency import run_in_threadpool
 
 
 def getRedditData(city):
     load_dotenv()
-
+    
     REDDIT_CLIENT_ID = os.getenv("REDDIT_CLIENT_ID")
     REDDIT_CLIENT_SECRET = os.getenv("REDDIT_CLIENT_SECRET")
     REDDIT_USER_AGENT = os.getenv("REDDIT_USER_AGENT")
@@ -45,9 +46,6 @@ def getRedditData(city):
         subreddits = ["solotravel", "travel"]
         print(f"Subreddit r/{CITY} does NOT exist.")
 
-
-
-
     with open("output.txt", "w", encoding="utf-8", errors="ignore") as file:
         for subreddit in subreddits:
             searchResults = reddit.subreddit(subreddit).search(query, sort="best", syntax="lucene", limit=10)
@@ -57,3 +55,6 @@ def getRedditData(city):
                 filteredComments = [comment for comment in submission.comments.list() if comment.score >= 100]
                 for comment in filteredComments:
                     file.write("Upvotes: [" + str(comment.score) + "]" + "Comment: [" + comment.body + "]")
+
+
+
