@@ -14,9 +14,18 @@ document.addEventListener("DOMContentLoaded", () => {
     minZoom: 11,
     maxZoom: 18,
     zoomControl: true,
-    scrollWheelZoom: true,
+    scrollWheelZoom: false,
     attributionControl: false,
   });
+
+  map.on("mouseover", function () {
+    map.scrollWheelZoom.enable();
+  });
+
+  map.on("mouseout", function () {
+    map.scrollWheelZoom.disable();
+  });
+
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
@@ -65,4 +74,8 @@ document.addEventListener("DOMContentLoaded", () => {
       '<div class="map-empty-state">Map preview unavailable — coordinates missing for current itinerary.</div>';
     map.remove();
   }
+
+  window.addEventListener("resize", () => {
+    map.invalidateSize();
+  });
 });

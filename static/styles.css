@@ -5,6 +5,12 @@
   font-family: "Inter", sans-serif;
 }
 
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   background: linear-gradient(to bottom, #e8f5e9, #d7f3d9);
   color: #111;
@@ -192,37 +198,43 @@ body {
 }
 
 /* ===============================
-   Results Page Layout
+   Results Page Layout (FIXED MAP)
 =================================*/
 
+:root {
+  --navbar-h: 96px;
+}
+
 .results-shell {
-  display: flex;
-  min-height: calc(100vh - 96px);
+  position: relative;
+  width: 100%;
+  height: calc(100vh - var(--navbar-h));
+  overflow: hidden;
+  display: block;
   background: linear-gradient(135deg, #ecfdf5, #f8fafc);
   color: #0f172a;
 }
 
+/* LEFT PANEL */
 .results-panel {
-  flex: 1 1 100%;
-  max-width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 33.333%;
   display: flex;
   flex-direction: column;
   background: rgba(255, 255, 255, 0.86);
   backdrop-filter: blur(6px);
   border-right: 1px solid rgba(16, 185, 129, 0.2);
-}
-
-@media (min-width: 768px) {
-  .results-panel {
-    flex-basis: 33.333%;
-    max-width: 33.333%;
-  }
+  overflow: hidden;
+  z-index: 2;
 }
 
 .results-panel header {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 3;
   background: rgba(255, 255, 255, 0.94);
   border-bottom: 1px solid rgba(16, 185, 129, 0.18);
   padding: 1.5rem;
@@ -241,14 +253,19 @@ body {
   color: #64748b;
 }
 
+/* ONLY THIS SCROLLS */
 .recommendations-list {
-  flex: 1;
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 1.25rem 1.5rem 1.5rem;
   display: grid;
   gap: 1rem;
+  -webkit-overflow-scrolling: touch;
 }
 
+/* Recommendation Cards */
 .recommendation-card {
   border: 1px solid rgba(16, 185, 129, 0.2);
   border-radius: 0.9rem;
@@ -281,25 +298,42 @@ body {
   line-height: 1.5;
 }
 
+/* RIGHT PANEL (FIXED MAP) */
 .map-panel {
-  display: none;
-  position: relative;
-  flex: 1;
-  min-height: 400px;
-}
-
-@media (min-width: 768px) {
-  .map-panel {
-    display: block;
-  }
+  position: fixed;
+  top: var(--navbar-h);
+  right: 0;
+  bottom: 0;
+  width: calc(100% - 33.333%);
+  height: calc(100vh - var(--navbar-h));
+  z-index: 1;
+  overflow: hidden;
+  background: #f8fafc;
 }
 
 #map {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
-/* Legacy Tiles (fallback) */
+/* Mobile layout */
+@media (max-width: 767px) {
+  .results-panel {
+    position: static;
+    width: 100%;
+    border-right: none;
+  }
+  .map-panel {
+    position: static;
+    width: 100%;
+    height: 320px;
+    top: auto;
+  }
+}
+
+/* Legacy Tiles */
 .tiles {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -353,7 +387,7 @@ body {
   color: #555;
 }
 
-/* Fade-in animation for container */
+/* Fade-in animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -362,15 +396,5 @@ body {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@media (max-width: 767px) {
-  .results-panel {
-    border-right: none;
-  }
-
-  .recommendations-list {
-    padding-bottom: 4rem;
   }
 }
