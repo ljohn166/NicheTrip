@@ -6,16 +6,16 @@
     <title>NicheTrip</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="description" content="">
-    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-    <link rel="icon" href="/static/nichelogo_sm.png">
+<link rel="icon" href="{{ url_for('static', path='nichelogoPicture.png') }}">
   </head>
 
   <body>
     <!-- Navbar -->
     <header class="navbar">
       <div class="logo">
-        <img src="/static/nichelogo_sm.png" alt="NicheTrip logo" />
+        <img src="{{ url_for('static', path='nichelogoPicture.png') }}" alt="NicheTrip logo" />
         <span>NicheTrip</span>
       </div>
       <nav>
@@ -28,6 +28,7 @@
   {% block content %}{% endblock %}
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="/static/main.js"></script>
+  <script src="{{ url_for('static', path='main.js') }}"></script>
+
 </body>
 </html>

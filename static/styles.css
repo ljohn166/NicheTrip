@@ -103,9 +103,10 @@ body {
 
 .hero-image img {
   width: 100%;
-  max-width: 240px;
-  border-radius: 12px;
+  max-width: 480px;
+  border-radius: 16px;
   object-fit: cover;
+  height: auto;
 }
 
 /* Info Section */
